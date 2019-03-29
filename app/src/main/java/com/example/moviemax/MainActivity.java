@@ -53,12 +53,20 @@ public class  MainActivity extends AppCompatActivity {
                             for(int i = 0; i < jsonArray.length(); i++){
                                 JSONObject hit = jsonArray.getJSONObject(i);
 
+                                int id = hit.getInt("id");
                                 String title = hit.getString("title");
+                                String language = hit.getString("original_language");
                                 String showImage = "https://image.tmdb.org/t/p/w500" + hit.getString("poster_path");
+                                String overview = hit.getString("overview");
+
+                                ArrayList<String> genres = new ArrayList<String>();
+                                JSONArray arrGenres = hit.getJSONArray("genre_ids");
+                                for( int j = 0; j < arrGenres.length(); j++) {
+                                    genres.add(Genres.getList().get(arrGenres.get(j)));
+                                }
 
 
-
-                                showArrayList.add(new Show(title, showImage));
+                                showArrayList.add(new Show(id, title, genres, language, showImage, overview));
 
                             }
 
